@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
@@ -87,8 +89,46 @@ public class MainFrame extends JFrame {
     private WaypointModel getWaypointModel() {
         if (waypointModel == null) {
             waypointModel = new WaypointModel();
+            waypointModel.addListDataListener(new ModelListener());
         }
         return waypointModel;
+    }
+
+    public class ModelListener implements ListDataListener {
+
+        /*
+         * (non-Javadoc)
+         * @see
+         * javax.swing.event.ListDataListener#contentsChanged(javax.swing.event
+         * .ListDataEvent)
+         */
+        @Override
+        public void contentsChanged(ListDataEvent e) {
+            getMapView().repaint();
+        }
+
+        /*
+         * (non-Javadoc)
+         * @see
+         * javax.swing.event.ListDataListener#intervalAdded(javax.swing.event
+         * .ListDataEvent)
+         */
+        @Override
+        public void intervalAdded(ListDataEvent e) {
+            getMapView().repaint();
+        }
+
+        /*
+         * (non-Javadoc)
+         * @see
+         * javax.swing.event.ListDataListener#intervalRemoved(javax.swing.event
+         * .ListDataEvent)
+         */
+        @Override
+        public void intervalRemoved(ListDataEvent e) {
+            getMapView().repaint();
+        }
+
     }
 
 }
