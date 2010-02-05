@@ -3,7 +3,6 @@ package net.sourcewalker.fakegps;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.util.Set;
 
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.Waypoint;
@@ -13,11 +12,11 @@ import org.jdesktop.swingx.mapviewer.WaypointRenderer;
 @SuppressWarnings("unchecked")
 public class GpsPainter extends WaypointPainter {
 
-    public GpsPainter(Set waypoints) {
+    public GpsPainter(WaypointModel model) {
         super();
 
         setRenderer(new GpsRenderer());
-        setWaypoints(waypoints);
+        setWaypoints(model.getDataSet());
     }
 
     public class GpsRenderer implements WaypointRenderer {
@@ -29,8 +28,7 @@ public class GpsPainter extends WaypointPainter {
          * .awt.Graphics2D, org.jdesktop.swingx.JXMapViewer,
          * org.jdesktop.swingx.mapviewer.Waypoint)
          */
-        public boolean paintWaypoint(Graphics2D g, JXMapViewer map,
-                Waypoint wp) {
+        public boolean paintWaypoint(Graphics2D g, JXMapViewer map, Waypoint wp) {
             g.setPaint(new Color(0, 0, 255, 200));
             Polygon poly = new Polygon();
             poly.addPoint(0, 0);

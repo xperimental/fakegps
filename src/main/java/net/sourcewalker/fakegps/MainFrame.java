@@ -2,8 +2,6 @@ package net.sourcewalker.fakegps;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -25,20 +23,20 @@ public class MainFrame extends JFrame {
 
     private JMenuBar menuBar;
 
-    private Set<GpsWaypoint> waypointSet;
+    private WaypointModel waypointModel;
 
     private ResourceMap resourceMap;
 
     public MainFrame() {
         super();
-        
+
         setName("mainFrame");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(800, 600));
 
         setContentPane(createContentPane());
         setJMenuBar(createMenuBar());
-        
+
         createResourceMap();
     }
 
@@ -67,7 +65,7 @@ public class MainFrame extends JFrame {
 
     private JPanel getSidePanel() {
         if (sidePanel == null) {
-            sidePanel = new SidePanel(waypointSet);
+            sidePanel = new SidePanel(waypointModel);
         }
         return sidePanel;
     }
@@ -81,16 +79,16 @@ public class MainFrame extends JFrame {
             mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
             mapKit.setAddressLocationShown(false);
             mapKit.getMainMap().setOverlayPainter(
-                    new GpsPainter(getWaypointSet()));
+                    new GpsPainter(getWaypointModel()));
         }
         return mapKit;
     }
 
-    private Set<GpsWaypoint> getWaypointSet() {
-        if (waypointSet == null) {
-            waypointSet = new HashSet<GpsWaypoint>();
+    private WaypointModel getWaypointModel() {
+        if (waypointModel == null) {
+            waypointModel = new WaypointModel();
         }
-        return waypointSet;
+        return waypointModel;
     }
 
 }

@@ -17,4 +17,13 @@ public class GpsWaypoint extends Waypoint {
         return getPosition().getLongitude();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return String.format("Point(%f, %f)", getLatitude(), getLongitude());
+    }
+
 }

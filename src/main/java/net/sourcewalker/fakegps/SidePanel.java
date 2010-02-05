@@ -4,14 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Random;
-import java.util.Set;
 
 import javax.swing.ActionMap;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.ListModel;
-import javax.swing.event.ListDataListener;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -21,7 +18,7 @@ public class SidePanel extends JPanel {
 
     private static final long serialVersionUID = -1272970302372723527L;
 
-    private Set<GpsWaypoint> waypointSet;
+    private WaypointModel model;
 
     private JList waypointList;
 
@@ -35,9 +32,9 @@ public class SidePanel extends JPanel {
 
     private Random rand = new Random();
 
-    public SidePanel(Set<GpsWaypoint> waypoints) {
+    public SidePanel(WaypointModel dataModel) {
         super();
-        waypointSet = waypoints;
+        model = dataModel;
 
         createResourceMap();
 
@@ -54,7 +51,7 @@ public class SidePanel extends JPanel {
 
     private JList getWaypointList() {
         if (waypointList == null) {
-            waypointList = new JList(new WaypointListModel());
+            waypointList = new JList(model);
         }
         return waypointList;
     }
@@ -89,60 +86,18 @@ public class SidePanel extends JPanel {
                 .nextDouble() * 360 - 180);
         System.out.println("New Waypoint: " + wp.getLatitude() + " , "
                 + wp.getLongitude());
-        waypointSet.add(wp);
+        model.addWaypoint(wp);
     }
 
-    @Action(enabledProperty = "listEmpty")
+    @Action(enabledProperty = "itemSelected")
     public void removePoint() {
         System.out.println("SidePanel.removePoint()");
     }
 
-    public boolean getListEmpty() {
-        return waypointList.getModel().getSize() == 0;
-    }
-
-    public class WaypointListModel implements ListModel {
-
-        /*
-         * (non-Javadoc)
-         * @seejavax.swing.ListModel#addListDataListener(javax.swing.event.
-         * ListDataListener)
-         */
-        @Override
-        public void addListDataListener(ListDataListener l) {
-            // TODO Auto-generated method stub
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * @see javax.swing.ListModel#getElementAt(int)
-         */
-        @Override
-        public Object getElementAt(int index) {
-            return waypointSet.toArray()[index];
-        }
-
-        /*
-         * (non-Javadoc)
-         * @see javax.swing.ListModel#getSize()
-         */
-        @Override
-        public int getSize() {
-            return waypointSet.size();
-        }
-
-        /*
-         * (non-Javadoc)
-         * @seejavax.swing.ListModel#removeListDataListener(javax.swing.event.
-         * ListDataListener)
-         */
-        @Override
-        public void removeListDataListener(ListDataListener l) {
-            // TODO Auto-generated method stub
-
-        }
-
+    public boolean getItemSelected() {
+        boolean value = waypointList.getSelectedIndex() != -1;
+        System.out.println("SidePanel.getListEmpty() = " + value);
+        return value;
     }
 
 }
