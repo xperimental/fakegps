@@ -1,21 +1,19 @@
 package net.sourcewalker.fakegps;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-public class WaypointModel implements ListModel {
+public class WaypointModel implements ListModel, IDataModel {
 
-    private Set<GpsWaypoint> waypointSet;
+    private List<GpsWaypoint> waypoints;
     private List<ListDataListener> listeners;
 
     public WaypointModel() {
-        waypointSet = new HashSet<GpsWaypoint>();
+        waypoints = new ArrayList<GpsWaypoint>();
         listeners = new ArrayList<ListDataListener>();
     }
 
@@ -36,7 +34,7 @@ public class WaypointModel implements ListModel {
      */
     @Override
     public Object getElementAt(int index) {
-        return waypointSet.toArray()[index];
+        return waypoints.get(index);
     }
 
     /*
@@ -45,7 +43,7 @@ public class WaypointModel implements ListModel {
      */
     @Override
     public int getSize() {
-        return waypointSet.size();
+        return waypoints.size();
     }
 
     /*
@@ -58,9 +56,15 @@ public class WaypointModel implements ListModel {
         listeners.remove(l);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see
+     * net.sourcewalker.fakegps.IDataModel#addWaypoint(net.sourcewalker.fakegps
+     * .GpsWaypoint)
+     */
     public void addWaypoint(GpsWaypoint wp) {
-        waypointSet.add(wp);
-        itemAdded(waypointSet.size() - 1);
+        waypoints.add(wp);
+        itemAdded(waypoints.size() - 1);
     }
 
     private void itemAdded(int index) {
@@ -71,8 +75,13 @@ public class WaypointModel implements ListModel {
         }
     }
 
-    public Set<GpsWaypoint> getDataSet() {
-        return waypointSet;
+    /*
+     * (non-Javadoc)
+     * @see net.sourcewalker.fakegps.IDataModel#getWaypoints()
+     */
+    @Override
+    public List<GpsWaypoint> getWaypoints() {
+        return waypoints;
     }
 
 }

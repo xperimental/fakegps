@@ -84,8 +84,6 @@ public class SidePanel extends JPanel {
     public void addPoint() {
         GpsWaypoint wp = new GpsWaypoint(rand.nextDouble() * 180 - 90, rand
                 .nextDouble() * 360 - 180);
-        System.out.println("New Waypoint: " + wp.getLatitude() + " , "
-                + wp.getLongitude());
         model.addWaypoint(wp);
     }
 
@@ -95,9 +93,7 @@ public class SidePanel extends JPanel {
     }
 
     public boolean getItemSelected() {
-        boolean value = waypointList.getSelectedIndex() != -1;
-        System.out.println("SidePanel.getListEmpty() = " + value);
-        return value;
+        return waypointList.getSelectedIndex() != -1;
     }
 
 }

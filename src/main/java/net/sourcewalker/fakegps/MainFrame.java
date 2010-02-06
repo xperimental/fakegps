@@ -67,7 +67,7 @@ public class MainFrame extends JFrame {
 
     private JPanel getSidePanel() {
         if (sidePanel == null) {
-            sidePanel = new SidePanel(waypointModel);
+            sidePanel = new SidePanel(getWaypointModel());
         }
         return sidePanel;
     }
@@ -81,7 +81,7 @@ public class MainFrame extends JFrame {
             mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
             mapKit.setAddressLocationShown(false);
             mapKit.getMainMap().setOverlayPainter(
-                    new GpsPainter(getWaypointModel()));
+                    new RoutePainter(getWaypointModel()));
         }
         return mapKit;
     }
