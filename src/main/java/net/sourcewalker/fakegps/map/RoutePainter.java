@@ -2,8 +2,15 @@ package net.sourcewalker.fakegps.map;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
+import java.awt.Image;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import net.sourcewalker.fakegps.data.GpsWaypoint;
 import net.sourcewalker.fakegps.data.IDataModel;
@@ -14,10 +21,34 @@ import org.jdesktop.swingx.painter.Painter;
 
 public class RoutePainter implements Painter<JXMapViewer> {
 
+    private static final int POINT_RADIUS = 5;
+
     private IDataModel model;
+    private Image startFlag;
+    private Image endFlag;
 
     public RoutePainter(IDataModel dataModel) {
         model = dataModel;
+
+        // Load images
+        startFlag = loadImage("startFlag.png");
+        endFlag = loadImage("endFlag.png");
+    }
+
+    /**
+     * @param startFlag2
+     * @param string
+     */
+    private Image loadImage(String key) {
+        InputStream input = getClass().getResourceAsStream(key);
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(input);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return image;
     }
 
     /*
@@ -27,20 +58,73 @@ public class RoutePainter implements Painter<JXMapViewer> {
      */
     @Override
     public void paint(Graphics2D g, JXMapViewer map, int arg2, int arg3) {
-        g.setPaint(new Color(0, 0, 255, 200));
+        List<Point2D> linePoints = new ArrayList<Point2D>();
+
         for (GpsWaypoint wp : model.getWaypoints()) {
             GeoPosition position = wp.getPosition();
             Point2D mapPoint = map.convertGeoPositionToPoint(position);
+            linePoints.add(mapPoint);
             if (g.getClip().contains(mapPoint)) {
-                Polygon triangle = new Polygon();
-                triangle.addPoint(0, 0);
-                triangle.addPoint(11, 11);
-                triangle.addPoint(-11, 11);
-                triangle
-                        .translate((int) mapPoint.getX(), (int) mapPoint.getY());
-                g.fill(triangle);
+                if (model.isStartPoint(wp)) {
+                    paintStartPoint(g, mapPoint);
+                } else if (model.isEndPoint(wp)) {
+                    paintEndPoint(g, mapPoint);
+                } else {
+                    paintNormalPoint(g, mapPoint);
+                }
             }
         }
+
+        if (linePoints.size() > 1) {
+            g.setPaint(new Color(0, 0, 0, 255));
+            Point2D start = linePoints.remove(0);
+            while (linePoints.size() > 0) {
+                Point2D end = linePoints.remove(0);
+                g.drawLine((int) start.getX(), (int) start.getY(), (int) end
+                        .getX(), (int) end.getY());
+                start = end;
+            }
+        }
+    }
+
+    /**
+     * @param g
+     * @param mapPoint
+     */
+    private void paintStartPoint(Graphics2D g, Point2D point) {
+        System.out.println("RoutePainter.paintStartPoint()");
+        drawFlag(g, point, startFlag);
+    }
+
+    /**
+     * @param g
+     * @param point
+     * @param flag
+     */
+    private void drawFlag(Graphics2D g, Point2D point, Image flag) {
+        g.drawImage(flag, (int) point.getX() - (flag.getWidth(null) / 2),
+                (int) point.getY() - flag.getHeight(null), null);
+    }
+
+    /**
+     * @param g
+     * @param mapPoint
+     */
+    private void paintEndPoint(Graphics2D g, Point2D point) {
+        System.out.println("RoutePainter.paintEndPoint()");
+        drawFlag(g, point, endFlag);
+    }
+
+    /**
+     * @param g
+     * @param mapPoint
+     */
+    private void paintNormalPoint(Graphics2D g, Point2D point) {
+        System.out.println("RoutePainter.paintNormalPoint()");
+        g.setPaint(new Color(0, 0, 255, 200));
+        g.fillOval((int) (point.getX() - POINT_RADIUS),
+                (int) (point.getY() - POINT_RADIUS), POINT_RADIUS * 2,
+                POINT_RADIUS * 2);
     }
 
 }

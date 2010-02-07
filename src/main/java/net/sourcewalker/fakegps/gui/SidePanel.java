@@ -85,8 +85,8 @@ public class SidePanel extends JPanel {
 
     @Action
     public void addPoint() {
-        GpsWaypoint wp = new GpsWaypoint(rand.nextDouble() * 180 - 90, rand
-                .nextDouble() * 360 - 180);
+        GpsWaypoint wp = new GpsWaypoint(rand.nextDouble() * 90 - 45, rand
+                .nextDouble() * 180 - 90);
         model.addWaypoint(wp);
     }
 

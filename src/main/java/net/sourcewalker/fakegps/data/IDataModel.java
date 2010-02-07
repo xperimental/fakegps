@@ -8,4 +8,10 @@ public interface IDataModel {
 
     public abstract List<GpsWaypoint> getWaypoints();
 
+    public abstract boolean isNormalPoint(GpsWaypoint wp);
+
+    public abstract boolean isEndPoint(GpsWaypoint wp);
+
+    public abstract boolean isStartPoint(GpsWaypoint wp);
+
 }
