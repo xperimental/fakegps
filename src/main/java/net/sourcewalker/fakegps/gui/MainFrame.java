@@ -1,4 +1,4 @@
-package net.sourcewalker.fakegps;
+package net.sourcewalker.fakegps.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,6 +8,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+
+import net.sourcewalker.fakegps.data.WaypointModel;
+import net.sourcewalker.fakegps.map.RoutePainter;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;

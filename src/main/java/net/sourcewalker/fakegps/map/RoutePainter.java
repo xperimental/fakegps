@@ -1,9 +1,12 @@
-package net.sourcewalker.fakegps;
+package net.sourcewalker.fakegps.map;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.Point2D;
+
+import net.sourcewalker.fakegps.data.GpsWaypoint;
+import net.sourcewalker.fakegps.data.IDataModel;
 
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;

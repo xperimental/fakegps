@@ -1,5 +1,7 @@
 package net.sourcewalker.fakegps;
 
+import net.sourcewalker.fakegps.gui.MainFrame;
+
 import org.jdesktop.application.Application;
 
 public class FakeGpsApp extends Application {

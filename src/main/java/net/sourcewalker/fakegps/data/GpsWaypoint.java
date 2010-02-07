@@ -1,4 +1,4 @@
-package net.sourcewalker.fakegps;
+package net.sourcewalker.fakegps.data;
 
 import org.jdesktop.swingx.mapviewer.Waypoint;
 
