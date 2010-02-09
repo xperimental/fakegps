@@ -92,7 +92,6 @@ public class SidePanel extends JPanel {
 
     @Action(enabledProperty = "itemSelected")
     public void removePoint() {
-        System.out.println("SidePanel.removePoint()");
     }
 
     public boolean getItemSelected() {

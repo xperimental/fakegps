@@ -13,7 +13,6 @@ public class GpsWaypoint extends Waypoint {
     }
 
     public double getLongitude() {
-        // TODO Auto-generated method stub
         return getPosition().getLongitude();
     }
 

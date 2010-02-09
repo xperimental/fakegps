@@ -24,7 +24,6 @@ public class WaypointModel implements ListModel, IDataModel {
      */
     @Override
     public void addListDataListener(ListDataListener l) {
-        System.out.println("WaypointModel.addListDataListener()");
         listeners.add(l);
     }
 

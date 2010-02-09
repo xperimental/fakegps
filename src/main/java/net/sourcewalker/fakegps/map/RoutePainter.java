@@ -92,7 +92,6 @@ public class RoutePainter implements Painter<JXMapViewer> {
      * @param mapPoint
      */
     private void paintStartPoint(Graphics2D g, Point2D point) {
-        System.out.println("RoutePainter.paintStartPoint()");
         drawFlag(g, point, startFlag);
     }
 
@@ -111,7 +110,6 @@ public class RoutePainter implements Painter<JXMapViewer> {
      * @param mapPoint
      */
     private void paintEndPoint(Graphics2D g, Point2D point) {
-        System.out.println("RoutePainter.paintEndPoint()");
         drawFlag(g, point, endFlag);
     }
 
@@ -120,7 +118,6 @@ public class RoutePainter implements Painter<JXMapViewer> {
      * @param mapPoint
      */
     private void paintNormalPoint(Graphics2D g, Point2D point) {
-        System.out.println("RoutePainter.paintNormalPoint()");
         g.setPaint(new Color(0, 0, 255, 200));
         g.fillOval((int) (point.getX() - POINT_RADIUS),
                 (int) (point.getY() - POINT_RADIUS), POINT_RADIUS * 2,
