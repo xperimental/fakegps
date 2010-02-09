@@ -85,6 +85,8 @@ public class MainFrame extends JFrame {
             mapKit.setAddressLocationShown(false);
             mapKit.getMainMap().setOverlayPainter(
                     new RoutePainter(getWaypointModel()));
+            mapKit.getMainMap().addMouseListener(
+                    new MapMouseListener(mapKit, waypointModel));
         }
         return mapKit;
     }

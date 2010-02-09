@@ -1,11 +1,16 @@
 package net.sourcewalker.fakegps.data;
 
+import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.Waypoint;
 
 public class GpsWaypoint extends Waypoint {
 
     public GpsWaypoint(double latitude, double longitude) {
         super(latitude, longitude);
+    }
+
+    public GpsWaypoint(GeoPosition geoPosition) {
+        super(geoPosition);
     }
 
     public double getLatitude() {

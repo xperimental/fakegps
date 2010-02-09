@@ -7,10 +7,16 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class WaypointModel implements ListModel, IDataModel {
+
+    private static final Log logger = LogFactory.getLog(WaypointModel.class);
 
     private List<GpsWaypoint> waypoints;
     private List<ListDataListener> listeners;
+    private MapTool currentTool = MapTool.NULL;
 
     public WaypointModel() {
         waypoints = new ArrayList<GpsWaypoint>();
@@ -120,6 +126,27 @@ public class WaypointModel implements ListModel, IDataModel {
         if (waypoints.size() == 0)
             return false;
         return waypoints.get(0).equals(wp);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IDataModel#getCurrentTool()
+     */
+    @Override
+    public MapTool getCurrentTool() {
+        return currentTool;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see
+     * net.sourcewalker.fakegps.data.IDataModel#setCurrentTool(net.sourcewalker
+     * .fakegps.data.MapTool)
+     */
+    @Override
+    public void setCurrentTool(MapTool newTool) {
+        currentTool = newTool;
+        logger.debug("New map tool: " + currentTool);
     }
 
 }

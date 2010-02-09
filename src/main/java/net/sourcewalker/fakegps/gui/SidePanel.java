@@ -3,17 +3,15 @@ package net.sourcewalker.fakegps.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.Random;
 
 import javax.swing.ActionMap;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
-import net.sourcewalker.fakegps.data.GpsWaypoint;
 import net.sourcewalker.fakegps.data.WaypointModel;
 
-import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationContext;
 
@@ -27,13 +25,11 @@ public class SidePanel extends JPanel {
 
     private JPanel buttonPanel;
 
-    private JButton addButton;
+    private JToggleButton addButton;
 
     private JButton removeButton;
 
     private ActionMap actions;
-
-    private Random rand = new Random();
 
     public SidePanel(WaypointModel dataModel) {
         super();
@@ -49,7 +45,7 @@ public class SidePanel extends JPanel {
 
     private void createResourceMap() {
         ApplicationContext ctx = Application.getInstance().getContext();
-        actions = ctx.getActionMap(this);
+        actions = ctx.getActionMap(WaypointActions.class, new WaypointActions(model));
     }
 
     private JList getWaypointList() {
@@ -69,9 +65,9 @@ public class SidePanel extends JPanel {
         return buttonPanel;
     }
 
-    private JButton getAddButton() {
+    private JToggleButton getAddButton() {
         if (addButton == null) {
-            addButton = new JButton(actions.get("addPoint"));
+            addButton = new JToggleButton(actions.get("addPoint"));
         }
         return addButton;
     }
@@ -81,21 +77,6 @@ public class SidePanel extends JPanel {
             removeButton = new JButton(actions.get("removePoint"));
         }
         return removeButton;
-    }
-
-    @Action
-    public void addPoint() {
-        GpsWaypoint wp = new GpsWaypoint(rand.nextDouble() * 90 - 45, rand
-                .nextDouble() * 180 - 90);
-        model.addWaypoint(wp);
-    }
-
-    @Action(enabledProperty = "itemSelected")
-    public void removePoint() {
-    }
-
-    public boolean getItemSelected() {
-        return waypointList.getSelectedIndex() != -1;
     }
 
 }
