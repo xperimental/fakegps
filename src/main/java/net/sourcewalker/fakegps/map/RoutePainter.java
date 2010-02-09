@@ -15,11 +15,15 @@ import javax.imageio.ImageIO;
 import net.sourcewalker.fakegps.data.GpsWaypoint;
 import net.sourcewalker.fakegps.data.IDataModel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.painter.Painter;
 
 public class RoutePainter implements Painter<JXMapViewer> {
+
+    private static final Log logger = LogFactory.getLog(RoutePainter.class);
 
     private static final int POINT_RADIUS = 5;
 
@@ -45,8 +49,7 @@ public class RoutePainter implements Painter<JXMapViewer> {
         try {
             image = ImageIO.read(input);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("Can't load flag image: " + e);
         }
         return image;
     }
