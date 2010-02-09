@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 
 import net.sourcewalker.fakegps.data.GpsWaypoint;
 import net.sourcewalker.fakegps.data.IDataModel;
+import net.sourcewalker.fakegps.data.MapTool;
 
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
@@ -34,6 +35,7 @@ public class MapMouseListener implements MouseListener {
                     mapPoint);
             GpsWaypoint wp = new GpsWaypoint(geoPoint);
             model.addWaypoint(wp);
+            model.setCurrentTool(MapTool.ADDPOINT);
             break;
         default:
             break;

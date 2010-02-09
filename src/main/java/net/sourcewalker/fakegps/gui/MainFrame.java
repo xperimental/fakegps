@@ -1,6 +1,7 @@
 package net.sourcewalker.fakegps.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -9,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
+import net.sourcewalker.fakegps.data.MapTool;
+import net.sourcewalker.fakegps.data.MapToolListener;
 import net.sourcewalker.fakegps.data.WaypointModel;
 import net.sourcewalker.fakegps.map.RoutePainter;
 
@@ -95,11 +98,36 @@ public class MainFrame extends JFrame {
         if (waypointModel == null) {
             waypointModel = new WaypointModel();
             waypointModel.addListDataListener(new ModelListener());
+            waypointModel.addToolListener(new ToolListener());
         }
         return waypointModel;
     }
 
-    public class ModelListener implements ListDataListener {
+    private class ToolListener implements MapToolListener {
+
+        /*
+         * (non-Javadoc)
+         * @see net.sourcewalker.fakegps.data.MapToolListener#toolChanged(net.
+         * sourcewalker.fakegps.data.MapTool)
+         */
+        @Override
+        public void toolChanged(MapTool currentTool) {
+            switch (currentTool) {
+            case ADDPOINT:
+                getMapView().getMainMap().setCursor(
+                        Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                break;
+            case NULL:
+                getMapView().getMainMap().setCursor(Cursor.getDefaultCursor());
+                break;
+            default:
+                break;
+            }
+        }
+
+    }
+
+    private class ModelListener implements ListDataListener {
 
         /*
          * (non-Javadoc)

@@ -17,10 +17,12 @@ public class WaypointModel implements ListModel, IDataModel {
     private List<GpsWaypoint> waypoints;
     private List<ListDataListener> listeners;
     private MapTool currentTool = MapTool.NULL;
+    private List<MapToolListener> mapToolListeners;
 
     public WaypointModel() {
         waypoints = new ArrayList<GpsWaypoint>();
         listeners = new ArrayList<ListDataListener>();
+        mapToolListeners = new ArrayList<MapToolListener>();
     }
 
     /*
@@ -146,7 +148,30 @@ public class WaypointModel implements ListModel, IDataModel {
     @Override
     public void setCurrentTool(MapTool newTool) {
         currentTool = newTool;
+        fireToolChanged();
+    }
+
+    private void fireToolChanged() {
         logger.debug("New map tool: " + currentTool);
+        for (MapToolListener listener: mapToolListeners) {
+            listener.toolChanged(currentTool);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IDataModel#addToolListener(net.sourcewalker.fakegps.data.MapToolListener)
+     */
+    @Override
+    public void addToolListener(MapToolListener listener) {
+        mapToolListeners.add(listener);
+    }
+
+    /* (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IDataModel#removeToolListener(net.sourcewalker.fakegps.data.MapToolListener)
+     */
+    @Override
+    public void removeToolListener(MapToolListener listener) {
+        mapToolListeners.remove(listener);
     }
 
 }

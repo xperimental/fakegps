@@ -15,7 +15,11 @@ public interface IDataModel {
     public abstract boolean isStartPoint(GpsWaypoint wp);
 
     public abstract void setCurrentTool(MapTool addpoint);
-    
+
     public abstract MapTool getCurrentTool();
+
+    public abstract void addToolListener(MapToolListener listener);
+
+    public abstract void removeToolListener(MapToolListener listener);
 
 }
