@@ -4,18 +4,30 @@ import net.sourcewalker.fakegps.gui.MainFrame;
 
 import org.jdesktop.application.Application;
 
+/**
+ * Application class for FakeGPS. Also contains a <code>main</code> static
+ * method so that it can be launched from the command-line.
+ * 
+ * @author Xperimental
+ */
 public class FakeGpsApp extends Application {
 
-    /*
-     * (non-Javadoc)
-     * @see org.jdesktop.application.Application#startup()
+    /**
+     * This method is run from the JDesktop framework to start the application.
      */
-    protected void startup() {
+    protected final void startup() {
         MainFrame frame = new MainFrame();
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
+    /**
+     * Startup method for launching the application. Uses the JDesktop framework
+     * to start the application class.
+     * 
+     * @param args
+     *            Command-line parameters.
+     */
+    public static void main(final String[] args) {
         Application.launch(FakeGpsApp.class, args);
     }
 }

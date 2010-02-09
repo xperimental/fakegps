@@ -3,21 +3,50 @@ package net.sourcewalker.fakegps.data;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.Waypoint;
 
+/**
+ * A simple waypoint of the route to be simulated for the Android device.
+ * 
+ * @author Xperimental
+ */
 public class GpsWaypoint extends Waypoint {
 
-    public GpsWaypoint(double latitude, double longitude) {
+    /**
+     * Creates a new waypoint at the specified geolocation.
+     * 
+     * @param latitude
+     *            Latitude of waypoint (WGS-84).
+     * @param longitude
+     *            Longitude of waypoint (WGS-84).
+     */
+    public GpsWaypoint(final double latitude, final double longitude) {
         super(latitude, longitude);
     }
 
-    public GpsWaypoint(GeoPosition geoPosition) {
+    /**
+     * Creates a new waypoint at the specified geolocation.
+     * 
+     * @param geoPosition
+     *            Position of the waypoint.
+     */
+    public GpsWaypoint(final GeoPosition geoPosition) {
         super(geoPosition);
     }
 
-    public double getLatitude() {
+    /**
+     * Returns the latitude of the waypoint.
+     * 
+     * @return Latitude of waypoint (WGS-84).
+     */
+    public final double getLatitude() {
         return getPosition().getLatitude();
     }
 
-    public double getLongitude() {
+    /**
+     * Returns the longitude of the waypoint.
+     * 
+     * @return Longitude of waypoint (WGS-84).
+     */
+    public final double getLongitude() {
         return getPosition().getLongitude();
     }
 
@@ -26,7 +55,7 @@ public class GpsWaypoint extends Waypoint {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
+    public final String toString() {
         return String.format("Point(%f, %f)", getLatitude(), getLongitude());
     }
 
