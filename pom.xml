@@ -31,6 +31,11 @@
             <artifactId>appframework</artifactId>
             <version>1.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -65,18 +70,18 @@
                     </archive>
                 </configuration>
             </plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>appassembler-maven-plugin</artifactId>
-				<configuration>
-					<programs>
-						<program>
-							<mainClass>net.sourcewalker.fakegps.FakeGpsApp</mainClass>
-							<name>fakegps</name>
-						</program>
-					</programs>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <configuration>
+                    <programs>
+                        <program>
+                            <mainClass>net.sourcewalker.fakegps.FakeGpsApp</mainClass>
+                            <name>fakegps</name>
+                        </program>
+                    </programs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
