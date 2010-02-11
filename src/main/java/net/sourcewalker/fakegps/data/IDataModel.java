@@ -24,6 +24,11 @@ public interface IDataModel {
      * @return List of waypoints.
      */
     List<GpsWaypoint> getWaypoints();
+    
+    /**
+     * Remove all waypoints from the data model.
+     */
+    void clearWaypoints();
 
     /**
      * Returns true, if the waypoint is a normal point of the route (no start,

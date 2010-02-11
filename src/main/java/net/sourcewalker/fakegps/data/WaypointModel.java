@@ -157,4 +157,13 @@ public class WaypointModel implements IDataModel {
         changeListeners.remove(listener);
     }
 
+    /* (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IDataModel#clearWaypoints()
+     */
+    @Override
+    public void clearWaypoints() {
+        waypoints.clear();
+        fireDataChanged();
+    }
+
 }
