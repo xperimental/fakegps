@@ -24,7 +24,15 @@ public interface IDataModel {
      * @return List of waypoints.
      */
     List<GpsWaypoint> getWaypoints();
-    
+
+    /**
+     * Remove a waypoint from the route.
+     * 
+     * @param wp
+     *            Waypoint to remove.
+     */
+    void removeWaypoint(GpsWaypoint wp);
+
     /**
      * Remove all waypoints from the data model.
      */
