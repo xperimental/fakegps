@@ -19,18 +19,23 @@ public class WaypointActions {
 
     @Action
     public void addPoint(ActionEvent evt) {
+        toggleMapTool(evt, MapTool.ADDPOINT);
+    }
+
+    private void toggleMapTool(ActionEvent evt, MapTool tool) {
         JToggleButton source = (JToggleButton) evt.getSource();
         if (source.isSelected()) {
-            model.setCurrentTool(MapTool.ADDPOINT);
+            model.setCurrentTool(tool);
         } else {
             model.setCurrentTool(MapTool.NULL);
         }
     }
 
     @Action
-    public void removePoint() {
+    public void removePoint(ActionEvent evt) {
+        toggleMapTool(evt, MapTool.REMOVEPOINT);
     }
-    
+
     @Action
     public void clearPoints() {
         model.clearWaypoints();

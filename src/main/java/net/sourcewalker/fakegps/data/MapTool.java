@@ -8,11 +8,15 @@ package net.sourcewalker.fakegps.data;
  */
 public enum MapTool {
     /**
-     * Does nothing.
-     */
-    NULL,
-    /**
      * Appends a new waypoint to the route when the user clicks on the map.
      */
-    ADDPOINT
+    ADDPOINT,
+    /**
+     * Removes the clicked waypoint from the route.
+     */
+    REMOVEPOINT,
+    /**
+     * Does nothing.
+     */
+    NULL
 }

@@ -40,7 +40,7 @@ public class RoutePanel extends JPanel {
         }
         return border;
     }
-    
+
     public void setTitle(String title) {
         getPanelBorder().setTitle(title);
     }

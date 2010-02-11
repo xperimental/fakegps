@@ -10,6 +10,8 @@ import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
 import net.sourcewalker.fakegps.data.IDataModel;
+import net.sourcewalker.fakegps.data.MapTool;
+import net.sourcewalker.fakegps.data.MapToolListener;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationContext;
@@ -23,14 +25,14 @@ public class WaypointPanel extends JPanel {
 
     private JToggleButton addButton;
 
-    private JButton removeButton;
+    private JToggleButton removeButton;
 
     private ActionMap actions;
 
     private TitledBorder border;
 
     private ResourceMap resMap;
-    
+
     private JButton clearButton;
 
     public WaypointPanel(IDataModel dataModel) {
@@ -48,6 +50,7 @@ public class WaypointPanel extends JPanel {
         setMinimumSize(new Dimension(50, 100));
 
         resMap.injectComponents(this);
+        model.addToolListener(new ToolListener());
     }
 
     private TitledBorder getPanelBorder() {
@@ -71,22 +74,37 @@ public class WaypointPanel extends JPanel {
         return addButton;
     }
 
-    private JButton getRemoveButton() {
+    private JToggleButton getRemoveButton() {
         if (removeButton == null) {
-            removeButton = new JButton(actions.get("removePoint"));
+            removeButton = new JToggleButton(actions.get("removePoint"));
         }
         return removeButton;
     }
-    
+
     private JButton getClearButton() {
         if (clearButton == null) {
             clearButton = new JButton(actions.get("clearPoints"));
         }
         return clearButton;
     }
-    
+
     public void setTitle(String title) {
         getPanelBorder().setTitle(title);
+    }
+
+    public class ToolListener implements MapToolListener {
+
+        /*
+         * (non-Javadoc)
+         * @seenet.sourcewalker.fakegps.data.MapToolListener#toolChanged(net.
+         * sourcewalker.fakegps.data.MapTool)
+         */
+        @Override
+        public void toolChanged(MapTool currentTool) {
+            getAddButton().setSelected(currentTool == MapTool.ADDPOINT);
+            getRemoveButton().setSelected(currentTool == MapTool.REMOVEPOINT);
+        }
+
     }
 
 }

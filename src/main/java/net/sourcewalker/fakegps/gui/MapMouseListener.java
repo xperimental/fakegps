@@ -14,6 +14,8 @@ import org.jdesktop.swingx.mapviewer.GeoPosition;
 
 public class MapMouseListener implements MouseListener {
 
+    private static final double REMOVE_DISTANCE = 5;
+
     private IDataModel model;
     private JXMapKit map;
 
@@ -28,14 +30,24 @@ public class MapMouseListener implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+        Point2D clickPoint = new Point(e.getX(), e.getY());
         switch (model.getCurrentTool()) {
         case ADDPOINT:
-            Point2D mapPoint = new Point(e.getX(), e.getY());
             GeoPosition geoPoint = map.getMainMap().convertPointToGeoPosition(
-                    mapPoint);
-            GpsWaypoint wp = new GpsWaypoint(geoPoint);
-            model.addWaypoint(wp);
+                    clickPoint);
+            GpsWaypoint newWp = new GpsWaypoint(geoPoint);
+            model.addWaypoint(newWp);
             model.setCurrentTool(MapTool.ADDPOINT);
+            break;
+        case REMOVEPOINT:
+            for (GpsWaypoint wp : model.getWaypoints()) {
+                Point2D wpScreen = map.getMainMap().convertGeoPositionToPoint(
+                        wp.getPosition());
+                if (clickPoint.distance(wpScreen) < REMOVE_DISTANCE) {
+                    model.removeWaypoint(wp);
+                    break;
+                }
+            }
             break;
         default:
             break;
