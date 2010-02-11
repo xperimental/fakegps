@@ -9,21 +9,20 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
+import net.sourcewalker.fakegps.data.IDataModel;
 import net.sourcewalker.fakegps.data.WaypointModel;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationContext;
 
-public class SidePanel extends JPanel {
+public class WaypointPanel extends JPanel {
 
     private static final long serialVersionUID = -1272970302372723527L;
 
-    private WaypointModel model;
-
-    private JList waypointList;
-
-    private JPanel buttonPanel;
+    private IDataModel model;
 
     private JToggleButton addButton;
 
@@ -31,38 +30,31 @@ public class SidePanel extends JPanel {
 
     private ActionMap actions;
 
-    public SidePanel(WaypointModel dataModel) {
+    private TitledBorder border;
+
+    public WaypointPanel(IDataModel dataModel) {
         super();
         model = dataModel;
 
         createResourceMap();
 
-        setLayout(new BorderLayout());
-        add(getWaypointList(), BorderLayout.CENTER);
-        add(getButtonPanel(), BorderLayout.SOUTH);
+        setBorder(getPanelBorder());
+        setLayout(new FlowLayout());
+        add(getAddButton());
+        add(getRemoveButton());
         setMinimumSize(new Dimension(50, 100));
+    }
+
+    private TitledBorder getPanelBorder() {
+        if (border == null) {
+            border = new TitledBorder("Waypoint control");
+        }
+        return border;
     }
 
     private void createResourceMap() {
         ApplicationContext ctx = Application.getInstance().getContext();
         actions = ctx.getActionMap(WaypointActions.class, new WaypointActions(model));
-    }
-
-    private JList getWaypointList() {
-        if (waypointList == null) {
-            waypointList = new JList(model);
-        }
-        return waypointList;
-    }
-
-    private JPanel getButtonPanel() {
-        if (buttonPanel == null) {
-            buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout());
-            buttonPanel.add(getAddButton());
-            buttonPanel.add(getRemoveButton());
-        }
-        return buttonPanel;
     }
 
     private JToggleButton getAddButton() {

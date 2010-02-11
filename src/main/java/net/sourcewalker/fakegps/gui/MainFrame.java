@@ -7,11 +7,10 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 
 import net.sourcewalker.fakegps.data.MapTool;
 import net.sourcewalker.fakegps.data.MapToolListener;
+import net.sourcewalker.fakegps.data.ModelChangeListener;
 import net.sourcewalker.fakegps.data.WaypointModel;
 import net.sourcewalker.fakegps.map.RoutePainter;
 
@@ -73,7 +72,7 @@ public class MainFrame extends JFrame {
 
     private JPanel getSidePanel() {
         if (sidePanel == null) {
-            sidePanel = new SidePanel(getWaypointModel());
+            sidePanel = new WaypointPanel(getWaypointModel());
         }
         return sidePanel;
     }
@@ -97,7 +96,7 @@ public class MainFrame extends JFrame {
     private WaypointModel getWaypointModel() {
         if (waypointModel == null) {
             waypointModel = new WaypointModel();
-            waypointModel.addListDataListener(new ModelListener());
+            waypointModel.addChangeListener(new ModelListener());
             waypointModel.addToolListener(new ToolListener());
         }
         return waypointModel;
@@ -127,41 +126,16 @@ public class MainFrame extends JFrame {
 
     }
 
-    private class ModelListener implements ListDataListener {
+    private class ModelListener implements ModelChangeListener {
 
         /*
          * (non-Javadoc)
-         * @see
-         * javax.swing.event.ListDataListener#contentsChanged(javax.swing.event
-         * .ListDataEvent)
+         * @see net.sourcewalker.fakegps.data.ModelChangeListener#dataChanged()
          */
         @Override
-        public void contentsChanged(ListDataEvent e) {
+        public void dataChanged() {
             getMapView().repaint();
         }
-
-        /*
-         * (non-Javadoc)
-         * @see
-         * javax.swing.event.ListDataListener#intervalAdded(javax.swing.event
-         * .ListDataEvent)
-         */
-        @Override
-        public void intervalAdded(ListDataEvent e) {
-            getMapView().repaint();
-        }
-
-        /*
-         * (non-Javadoc)
-         * @see
-         * javax.swing.event.ListDataListener#intervalRemoved(javax.swing.event
-         * .ListDataEvent)
-         */
-        @Override
-        public void intervalRemoved(ListDataEvent e) {
-            getMapView().repaint();
-        }
-
     }
 
 }

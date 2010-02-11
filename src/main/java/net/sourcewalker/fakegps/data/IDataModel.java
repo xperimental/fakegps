@@ -85,4 +85,20 @@ public interface IDataModel {
      */
     void removeToolListener(MapToolListener listener);
 
+    /**
+     * Add a listener to the list of change listeners.
+     * 
+     * @param listener
+     *            Listener to add.
+     */
+    void addChangeListener(ModelChangeListener listener);
+
+    /**
+     * Remove a listener from the list of change listeners.
+     * 
+     * @param listener
+     *            Listener to remove.
+     */
+    void removeChangeListener(ModelChangeListener listener);
+
 }

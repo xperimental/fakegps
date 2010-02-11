@@ -3,14 +3,12 @@ package net.sourcewalker.fakegps.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ListModel;
-import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class WaypointModel implements ListModel, IDataModel {
+public class WaypointModel implements IDataModel {
 
     private static final Log logger = LogFactory.getLog(WaypointModel.class);
 
@@ -18,49 +16,13 @@ public class WaypointModel implements ListModel, IDataModel {
     private List<ListDataListener> listeners;
     private MapTool currentTool = MapTool.NULL;
     private List<MapToolListener> mapToolListeners;
+    private List<ModelChangeListener> changeListeners;
 
     public WaypointModel() {
         waypoints = new ArrayList<GpsWaypoint>();
         listeners = new ArrayList<ListDataListener>();
         mapToolListeners = new ArrayList<MapToolListener>();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @seejavax.swing.ListModel#addListDataListener(javax.swing.event.
-     * ListDataListener)
-     */
-    @Override
-    public void addListDataListener(ListDataListener l) {
-        listeners.add(l);
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see javax.swing.ListModel#getElementAt(int)
-     */
-    @Override
-    public Object getElementAt(int index) {
-        return waypoints.get(index);
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see javax.swing.ListModel#getSize()
-     */
-    @Override
-    public int getSize() {
-        return waypoints.size();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @seejavax.swing.ListModel#removeListDataListener(javax.swing.event.
-     * ListDataListener)
-     */
-    @Override
-    public void removeListDataListener(ListDataListener l) {
-        listeners.remove(l);
+        changeListeners = new ArrayList<ModelChangeListener>();
     }
 
     /*
@@ -71,15 +33,7 @@ public class WaypointModel implements ListModel, IDataModel {
      */
     public void addWaypoint(GpsWaypoint wp) {
         waypoints.add(wp);
-        itemAdded(waypoints.size() - 1);
-    }
-
-    private void itemAdded(int index) {
-        ListDataEvent evt = new ListDataEvent(this,
-                ListDataEvent.INTERVAL_ADDED, index, index);
-        for (ListDataListener listener : listeners) {
-            listener.intervalAdded(evt);
-        }
+        fireDataChanged();
     }
 
     /*
@@ -153,25 +107,58 @@ public class WaypointModel implements ListModel, IDataModel {
 
     private void fireToolChanged() {
         logger.debug("New map tool: " + currentTool);
-        for (MapToolListener listener: mapToolListeners) {
+        for (MapToolListener listener : mapToolListeners) {
             listener.toolChanged(currentTool);
         }
     }
 
-    /* (non-Javadoc)
-     * @see net.sourcewalker.fakegps.data.IDataModel#addToolListener(net.sourcewalker.fakegps.data.MapToolListener)
+    /*
+     * (non-Javadoc)
+     * @see
+     * net.sourcewalker.fakegps.data.IDataModel#addToolListener(net.sourcewalker
+     * .fakegps.data.MapToolListener)
      */
     @Override
     public void addToolListener(MapToolListener listener) {
         mapToolListeners.add(listener);
     }
 
-    /* (non-Javadoc)
-     * @see net.sourcewalker.fakegps.data.IDataModel#removeToolListener(net.sourcewalker.fakegps.data.MapToolListener)
+    /*
+     * (non-Javadoc)
+     * @see
+     * net.sourcewalker.fakegps.data.IDataModel#removeToolListener(net.sourcewalker
+     * .fakegps.data.MapToolListener)
      */
     @Override
     public void removeToolListener(MapToolListener listener) {
         mapToolListeners.remove(listener);
+    }
+
+    private void fireDataChanged() {
+        for (ModelChangeListener listener : changeListeners) {
+            listener.dataChanged();
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see
+     * net.sourcewalker.fakegps.data.IDataModel#addChangeListener(net.sourcewalker
+     * .fakegps.data.ModelChangeListener)
+     */
+    @Override
+    public void addChangeListener(ModelChangeListener listener) {
+        changeListeners.add(listener);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @seenet.sourcewalker.fakegps.data.IDataModel#removeChangeListener(net.
+     * sourcewalker.fakegps.data.ModelChangeListener)
+     */
+    @Override
+    public void removeChangeListener(ModelChangeListener listener) {
+        changeListeners.remove(listener);
     }
 
 }
