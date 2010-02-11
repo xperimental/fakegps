@@ -1,22 +1,19 @@
 package net.sourcewalker.fakegps.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.ActionMap;
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import net.sourcewalker.fakegps.data.IDataModel;
-import net.sourcewalker.fakegps.data.WaypointModel;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationContext;
+import org.jdesktop.application.ResourceMap;
 
 public class WaypointPanel extends JPanel {
 
@@ -32,29 +29,39 @@ public class WaypointPanel extends JPanel {
 
     private TitledBorder border;
 
+    private ResourceMap resMap;
+    
+    private JButton clearButton;
+
     public WaypointPanel(IDataModel dataModel) {
         super();
         model = dataModel;
 
-        createResourceMap();
+        initResources();
 
+        setName("waypointPanel");
         setBorder(getPanelBorder());
         setLayout(new FlowLayout());
         add(getAddButton());
         add(getRemoveButton());
+        add(getClearButton());
         setMinimumSize(new Dimension(50, 100));
+
+        resMap.injectComponents(this);
     }
 
     private TitledBorder getPanelBorder() {
         if (border == null) {
-            border = new TitledBorder("Waypoint control");
+            border = new TitledBorder("");
         }
         return border;
     }
 
-    private void createResourceMap() {
+    private void initResources() {
         ApplicationContext ctx = Application.getInstance().getContext();
-        actions = ctx.getActionMap(WaypointActions.class, new WaypointActions(model));
+        resMap = ctx.getResourceMap(WaypointPanel.class);
+        actions = ctx.getActionMap(WaypointActions.class, new WaypointActions(
+                model));
     }
 
     private JToggleButton getAddButton() {
@@ -69,6 +76,17 @@ public class WaypointPanel extends JPanel {
             removeButton = new JButton(actions.get("removePoint"));
         }
         return removeButton;
+    }
+    
+    private JButton getClearButton() {
+        if (clearButton == null) {
+            clearButton = new JButton(actions.get("clearPoints"));
+        }
+        return clearButton;
+    }
+    
+    public void setTitle(String title) {
+        getPanelBorder().setTitle(title);
     }
 
 }

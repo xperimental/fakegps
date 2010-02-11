@@ -30,5 +30,10 @@ public class WaypointActions {
     @Action
     public void removePoint() {
     }
+    
+    @Action
+    public void clearPoints() {
+        model.clearWaypoints();
+    }
 
 }

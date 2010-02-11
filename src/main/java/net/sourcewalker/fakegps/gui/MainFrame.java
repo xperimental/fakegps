@@ -73,7 +73,7 @@ public class MainFrame extends JFrame {
 
     private JPanel getSidePanel() {
         if (sidePanel == null) {
-            sidePanel = new WaypointPanel(getWaypointModel());
+            sidePanel = new SidePanel(getWaypointModel());
         }
         return sidePanel;
     }
