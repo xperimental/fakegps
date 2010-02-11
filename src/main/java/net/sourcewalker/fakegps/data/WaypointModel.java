@@ -3,8 +3,6 @@ package net.sourcewalker.fakegps.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.event.ListDataListener;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -13,14 +11,12 @@ public class WaypointModel implements IDataModel {
     private static final Log logger = LogFactory.getLog(WaypointModel.class);
 
     private List<GpsWaypoint> waypoints;
-    private List<ListDataListener> listeners;
     private MapTool currentTool = MapTool.NULL;
     private List<MapToolListener> mapToolListeners;
     private List<ModelChangeListener> changeListeners;
 
     public WaypointModel() {
         waypoints = new ArrayList<GpsWaypoint>();
-        listeners = new ArrayList<ListDataListener>();
         mapToolListeners = new ArrayList<MapToolListener>();
         changeListeners = new ArrayList<ModelChangeListener>();
     }

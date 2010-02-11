@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import net.sourcewalker.fakegps.data.IDataModel;
 import net.sourcewalker.fakegps.data.MapTool;
 import net.sourcewalker.fakegps.data.MapToolListener;
 import net.sourcewalker.fakegps.data.ModelChangeListener;
@@ -30,7 +31,7 @@ public class MainFrame extends JFrame {
 
     private JMenuBar menuBar;
 
-    private WaypointModel waypointModel;
+    private IDataModel waypointModel;
 
     private ResourceMap resourceMap;
 
@@ -93,7 +94,7 @@ public class MainFrame extends JFrame {
         return mapKit;
     }
 
-    private WaypointModel getWaypointModel() {
+    private IDataModel getWaypointModel() {
         if (waypointModel == null) {
             waypointModel = new WaypointModel();
             waypointModel.addChangeListener(new ModelListener());
