@@ -9,3 +9,8 @@ on the development workstation used by the application developer.
 
 With FakeGPS the developer can create a virtual path, which is sent to the
 Android device or emulator through the Android Debug Bridge (ADB) tool.
+
+Acknowledgements
+----------------
+This application uses icons from the excellent Tango Desktop icon theme.
+You can find the project page here: http://tango.freedesktop.org
