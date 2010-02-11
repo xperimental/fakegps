@@ -1,0 +1,11 @@
+Readme for FakeGPS
+------------------
+
+Introduction
+------------
+FakeGPS is a development tool for creating location-aware applications on the
+Android platform. The application itself does not run on Android, but instead
+on the development workstation used by the application developer.
+
+With FakeGPS the developer can create a virtual path, which is sent to the
+Android device or emulator through the Android Debug Bridge (ADB) tool.
