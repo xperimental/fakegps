@@ -15,12 +15,7 @@ import org.jdesktop.application.Action;
  * 
  * @author Xperimental
  */
-public class WaypointActions {
-
-    /**
-     * Contains a reference to the data model which is modified by the actions.
-     */
-    private IDataModel model;
+public class WaypointActions extends ActionsBase {
 
     /**
      * Create a new instance using the data model provided.
@@ -29,7 +24,7 @@ public class WaypointActions {
      *            Data model to modify.
      */
     public WaypointActions(final IDataModel dataModel) {
-        this.model = dataModel;
+        super(dataModel);
     }
 
     /**
@@ -56,9 +51,9 @@ public class WaypointActions {
     private void toggleMapTool(final ActionEvent evt, final MapTool tool) {
         JToggleButton source = (JToggleButton) evt.getSource();
         if (source.isSelected()) {
-            model.setCurrentTool(tool);
+            getModel().setCurrentTool(tool);
         } else {
-            model.setCurrentTool(MapTool.NULL);
+            getModel().setCurrentTool(MapTool.NULL);
         }
     }
 
@@ -79,7 +74,7 @@ public class WaypointActions {
      */
     @Action
     public final void clearPoints() {
-        model.clearWaypoints();
+        getModel().clearWaypoints();
     }
 
 }
