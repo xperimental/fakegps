@@ -1,8 +1,6 @@
 package net.sourcewalker.fakegps.gui;
 
-import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
 import javax.swing.ActionMap;
 import javax.swing.BoxLayout;
