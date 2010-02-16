@@ -27,6 +27,8 @@ public class RoutePainter implements Painter<JXMapViewer> {
 
     private static final int POINT_RADIUS = 5;
 
+    private static final int ROUTE_RADIUS = 8;
+
     private IDataModel model;
     private Image startFlag;
     private Image endFlag;
@@ -88,6 +90,24 @@ public class RoutePainter implements Painter<JXMapViewer> {
                 start = end;
             }
         }
+
+        GeoPosition routePosition = model.getRoutePosition();
+        if (routePosition != null) {
+            Point2D routeMap = map.convertGeoPositionToPoint(routePosition);
+            if (g.getClip().contains(routeMap)) {
+                paintRoutePosition(g, routeMap);
+            }
+        }
+    }
+
+    /**
+     * @param g
+     * @param routeMap
+     */
+    private void paintRoutePosition(Graphics2D g, Point2D routeMap) {
+        g.setPaint(new Color(255, 0, 0, 200));
+        g.fillOval((int) (routeMap.getX() - ROUTE_RADIUS), (int) (routeMap
+                .getY() - ROUTE_RADIUS), ROUTE_RADIUS * 2, ROUTE_RADIUS * 2);
     }
 
     /**

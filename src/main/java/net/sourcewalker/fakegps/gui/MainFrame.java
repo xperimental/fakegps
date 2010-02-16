@@ -137,6 +137,7 @@ public class MainFrame extends JFrame {
         public void dataChanged() {
             getMapView().repaint();
         }
+
     }
 
 }

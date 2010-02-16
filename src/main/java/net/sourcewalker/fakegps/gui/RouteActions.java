@@ -1,8 +1,9 @@
 package net.sourcewalker.fakegps.gui;
 
-import org.jdesktop.application.Action;
-
 import net.sourcewalker.fakegps.data.IDataModel;
+import net.sourcewalker.fakegps.data.IRoute;
+
+import org.jdesktop.application.Action;
 
 /**
  * Contains actions for modifying the route. These actions are used within the
@@ -25,17 +26,29 @@ public class RouteActions extends ActionsBase {
 
     @Action
     public void playRoute() {
-
+        if (getModel().getRoute() == IRoute.NULLROUTE) {
+            getModel().startRoute();
+        }
     }
 
     @Action
     public void pauseRoute() {
-
+        IRoute route = getModel().getRoute();
+        if (route != IRoute.NULLROUTE) {
+            if (route.isPaused()) {
+                route.unpause();
+            } else {
+                route.pause();
+            }
+        }
     }
 
     @Action
     public void resetRoute() {
-
+        IRoute route = getModel().getRoute();
+        if (route != IRoute.NULLROUTE) {
+            route.stop();
+        }
     }
 
 }

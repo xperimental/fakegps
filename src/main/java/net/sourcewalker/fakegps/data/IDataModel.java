@@ -2,6 +2,8 @@ package net.sourcewalker.fakegps.data;
 
 import java.util.List;
 
+import org.jdesktop.swingx.mapviewer.GeoPosition;
+
 /**
  * This interface contains the standard data model to modify the application
  * data. It is implemented by a class containing the actual data.
@@ -113,5 +115,34 @@ public interface IDataModel {
      *            Listener to remove.
      */
     void removeChangeListener(ModelChangeListener listener);
+
+    /**
+     * Starts a new route controller.
+     * 
+     * @return New route controller.
+     */
+    IRoute startRoute();
+
+    /**
+     * Returns the current route controller, if there is one.
+     * 
+     * @return Current route controller or {@link IRoute#NULLROUTE} if there is
+     *         none.
+     */
+    IRoute getRoute();
+
+    /**
+     * Notifies all route listeners, that there is a new location.
+     * 
+     * @param position
+     *            Current location of route.
+     */
+    void notifyNewLocation(GeoPosition position);
+
+    GeoPosition getRoutePosition();
+
+    void notifyRouteStarted(IRoute route);
+
+    void notifyRouteEnded();
 
 }
