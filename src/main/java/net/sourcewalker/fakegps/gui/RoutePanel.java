@@ -86,8 +86,4 @@ public class RoutePanel extends PanelBase {
         return stopButton;
     }
 
-    public void setTitle(String title) {
-        getPanelBorder().setTitle(title);
-    }
-
 }

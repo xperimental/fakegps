@@ -61,10 +61,6 @@ public class WaypointPanel extends PanelBase {
         return clearButton;
     }
 
-    public void setTitle(String title) {
-        getPanelBorder().setTitle(title);
-    }
-
     public class ToolListener implements MapToolListener {
 
         /*

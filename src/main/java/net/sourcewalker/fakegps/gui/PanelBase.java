@@ -56,4 +56,8 @@ public abstract class PanelBase extends JPanel {
         return border;
     }
 
+    public void setTitle(String title) {
+        getPanelBorder().setTitle(title);
+    }
+
 }

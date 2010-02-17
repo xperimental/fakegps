@@ -15,6 +15,8 @@ public class SidePanel extends JPanel {
 
     private RoutePanel routePanel;
 
+    private DevicePanel devicePanel;
+
     public SidePanel(IDataModel waypointModel) {
         model = waypointModel;
 
@@ -22,6 +24,17 @@ public class SidePanel extends JPanel {
         setLayout(layout);
         add(getWaypointPanel());
         add(getRoutePanel());
+        add(getDevicePanel());
+    }
+
+    /**
+     * @return
+     */
+    private DevicePanel getDevicePanel() {
+        if (devicePanel == null) {
+            devicePanel = new DevicePanel(model);
+        }
+        return devicePanel;
     }
 
     private RoutePanel getRoutePanel() {
