@@ -17,6 +17,7 @@ public class DevicePanel extends PanelBase {
     private JTextField portBox;
     private JButton connectButton;
     private JButton disconnectButton;
+    private JLabel portLabel;
 
     public DevicePanel(final IDataModel dataModel) {
         super(DevicePanel.class, "devicePanel", new DeviceActions(dataModel),
@@ -42,8 +43,7 @@ public class DevicePanel extends PanelBase {
         c.gridheight = 1;
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.WEST;
-        JLabel portLabel = new JLabel(resMap.getString("devicePanel.portLabel",
-                ""));
+        portLabel = new JLabel();
         gridPanel.add(portLabel, c);
 
         c.gridx = 1;
@@ -52,7 +52,6 @@ public class DevicePanel extends PanelBase {
         c.anchor = GridBagConstraints.CENTER;
         c.gridwidth = 3;
         portBox = new JTextField();
-        portBox.setText(resMap.getString("devicePanel.defaultPort", ""));
         gridPanel.add(portBox, c);
 
         c.gridx = 0;
@@ -76,7 +75,7 @@ public class DevicePanel extends PanelBase {
      * 
      * @return Current port.
      */
-    public int getPort() {
+    public final int getPort() {
         Integer port;
         try {
             port = Integer.parseInt(portBox.getText());
@@ -84,6 +83,26 @@ public class DevicePanel extends PanelBase {
             port = 5554;
         }
         return port.intValue();
+    }
+
+    /**
+     * Sets the text of the port input box.
+     * 
+     * @param port
+     *            New port.
+     */
+    public final void setPort(final int port) {
+        portBox.setText(Integer.toString(port));
+    }
+
+    /**
+     * Sets the label displayed next to the port input box.
+     * 
+     * @param label
+     *            New label.
+     */
+    public final void setPortLabel(final String label) {
+        portLabel.setText(label);
     }
 
 }
