@@ -7,17 +7,53 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 
+/**
+ * Default data model and controller implementation.
+ * 
+ * @author Xperimental
+ */
 public class WaypointModel implements IDataModel {
 
+    /**
+     * Logger for this class.
+     */
     private static final Log LOGGER = LogFactory.getLog(WaypointModel.class);
 
+    /**
+     * List containing the current waypoints.
+     */
     private List<GpsWaypoint> waypoints;
+
+    /**
+     * Contains the currently active map tool.
+     */
     private MapTool currentTool = MapTool.NULL;
+
+    /**
+     * Contains a list of map tool listeners.
+     */
     private List<MapToolListener> mapToolListeners;
+
+    /**
+     * Contains a list of data change listeners.
+     */
     private List<ModelChangeListener> changeListeners;
+
+    /**
+     * Contains the current route controller or {@link IRoute#NULLROUTE} if
+     * there is none.
+     */
     private IRoute currentRoute = IRoute.NULLROUTE;
+
+    /**
+     * Contains the current route position or <code>null</code> if there is no
+     * route.
+     */
     private GeoPosition currentRoutePosition = null;
 
+    /**
+     * Create a new empty data model.
+     */
     public WaypointModel() {
         waypoints = new ArrayList<GpsWaypoint>();
         mapToolListeners = new ArrayList<MapToolListener>();
@@ -108,6 +144,9 @@ public class WaypointModel implements IDataModel {
         fireToolChanged();
     }
 
+    /**
+     * Notifies all map tool listeners, that a new tool has been selected.
+     */
     private void fireToolChanged() {
         LOGGER.debug("New map tool: " + currentTool);
         for (MapToolListener listener : mapToolListeners) {
@@ -137,6 +176,9 @@ public class WaypointModel implements IDataModel {
         mapToolListeners.remove(listener);
     }
 
+    /**
+     * Notifies all data listeners that some property has changed.
+     */
     private void fireDataChanged() {
         for (ModelChangeListener listener : changeListeners) {
             listener.dataChanged();
@@ -222,7 +264,7 @@ public class WaypointModel implements IDataModel {
      * @see net.sourcewalker.fakegps.data.IDataModel#getRoutePosition()
      */
     @Override
-    public GeoPosition getRoutePosition() {
+    public final GeoPosition getRoutePosition() {
         return currentRoutePosition;
     }
 
@@ -231,7 +273,7 @@ public class WaypointModel implements IDataModel {
      * @see net.sourcewalker.fakegps.data.IDataModel#notfyRouteEnded()
      */
     @Override
-    public void notifyRouteEnded() {
+    public final void notifyRouteEnded() {
         currentRoute = IRoute.NULLROUTE;
         currentRoutePosition = null;
         fireDataChanged();
@@ -244,7 +286,7 @@ public class WaypointModel implements IDataModel {
      * .fakegps.data.SimpleRoute)
      */
     @Override
-    public void notifyRouteStarted(final IRoute route) {
+    public final void notifyRouteStarted(final IRoute route) {
         currentRoute = route;
         fireDataChanged();
     }

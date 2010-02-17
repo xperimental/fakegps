@@ -17,6 +17,9 @@ public class SimpleRoute implements IRoute {
      */
     private static final double DEFAULT_SPEED = 0.001;
 
+    /**
+     * Time between position updates.
+     */
     private static final int TICK_WAIT = 100;
 
     /**
@@ -171,20 +174,46 @@ public class SimpleRoute implements IRoute {
             fireRouteEnded();
         }
 
-        private boolean legEndReached(GpsWaypoint end) {
+        /**
+         * Returns true, if the end of a segment is reached.
+         * 
+         * @param end
+         *            Endpoint of segment.
+         * @return True, if end of segment is reached.
+         */
+        private boolean legEndReached(final GpsWaypoint end) {
             if (distance(currentPosition, end.getPosition()) < (2 * speed)) {
                 return true;
             }
             return false;
         }
 
-        private double distance(GeoPosition a, GeoPosition b) {
+        /**
+         * Calculates the distance between two points.
+         * 
+         * @param a
+         *            One point.
+         * @param b
+         *            Another point.
+         * @return Distance between the two points.
+         */
+        private double distance(final GeoPosition a, final GeoPosition b) {
             double latDiff = b.getLatitude() - a.getLatitude();
             double lonDiff = b.getLongitude() - a.getLongitude();
             return Math.sqrt(Math.pow(latDiff, 2) + Math.pow(lonDiff, 2));
         }
 
-        private GeoPosition getSpeedVector(GpsWaypoint start, GpsWaypoint end) {
+        /**
+         * Calculates the speed vector pointing from the start to the endpoint.
+         * 
+         * @param start
+         *            Startpoint of segment.
+         * @param end
+         *            Endpoint of segment.
+         * @return Speed vector pointing from start to end.
+         */
+        private GeoPosition getSpeedVector(final GpsWaypoint start,
+                final GpsWaypoint end) {
             double latDiff = end.getLatitude() - start.getLatitude();
             double lonDiff = end.getLongitude() - start.getLongitude();
             double length = Math.sqrt(Math.pow(latDiff, 2)
@@ -202,21 +231,21 @@ public class SimpleRoute implements IRoute {
      * @param position
      *            Current location of route.
      */
-    public void fireNewLocation(GeoPosition position) {
+    public final void fireNewLocation(final GeoPosition position) {
         model.notifyNewLocation(position);
     }
 
     /**
-     * 
+     * Notifies the model listeners, that this controller has started.
      */
-    public void fireRouteStarted() {
+    public final void fireRouteStarted() {
         model.notifyRouteStarted(this);
     }
 
     /**
-     * 
+     * Notifies the model listeners, that the route has ended.
      */
-    public void fireRouteEnded() {
+    public final void fireRouteEnded() {
         model.notifyRouteEnded();
     }
 

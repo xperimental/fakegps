@@ -139,10 +139,26 @@ public interface IDataModel {
      */
     void notifyNewLocation(GeoPosition position);
 
+    /**
+     * Returns the current position of the route or <code>null</code> if there
+     * is no route active.
+     * 
+     * @return Current route position or <code>null</code>.
+     */
     GeoPosition getRoutePosition();
 
+    /**
+     * Notify all listeners that a new route controller has started.
+     * 
+     * @param route
+     *            New route controller.
+     */
     void notifyRouteStarted(IRoute route);
 
+    /**
+     * Notify all listeners that the route has stopped. This will also reset the
+     * route position.
+     */
     void notifyRouteEnded();
 
 }
