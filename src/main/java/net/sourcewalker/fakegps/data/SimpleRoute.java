@@ -20,7 +20,7 @@ public class SimpleRoute implements IRoute {
     /**
      * Time between position updates.
      */
-    private static final int TICK_WAIT = 100;
+    private static final int TICK_WAIT = 1000;
 
     /**
      * Data model used for events.

@@ -21,6 +21,8 @@ public abstract class PanelBase extends JPanel {
 
     protected ResourceMap resMap;
 
+    protected ActionsBase actionsContainer;
+
     protected ActionMap actions;
 
     private TitledBorder border;
@@ -42,6 +44,7 @@ public abstract class PanelBase extends JPanel {
 
     private void initResources(Class<? extends PanelBase> clazz,
             ActionsBase actionsClass) {
+        actionsContainer = actionsClass;
         ApplicationContext ctx = Application.getInstance().getContext();
         resMap = ctx.getResourceMap(clazz);
         actions = ctx.getActionMap(actionsClass.getClass(), actionsClass);

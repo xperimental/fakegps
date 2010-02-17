@@ -21,6 +21,7 @@ public class DevicePanel extends PanelBase {
     public DevicePanel(final IDataModel dataModel) {
         super(DevicePanel.class, "devicePanel", new DeviceActions(dataModel),
                 dataModel);
+        ((DeviceActions) actionsContainer).setPanel(this);
     }
 
     /*
@@ -68,6 +69,21 @@ public class DevicePanel extends PanelBase {
         disconnectButton = new JButton();
         disconnectButton.setAction(actions.get("disconnect"));
         gridPanel.add(disconnectButton, c);
+    }
+
+    /**
+     * Returns the port entered into the text field.
+     * 
+     * @return Current port.
+     */
+    public int getPort() {
+        Integer port;
+        try {
+            port = Integer.parseInt(portBox.getText());
+        } catch (NumberFormatException e) {
+            port = 5554;
+        }
+        return port.intValue();
     }
 
 }
