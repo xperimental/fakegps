@@ -21,19 +21,65 @@ import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.painter.Painter;
 
+/**
+ * Default renderer for waypoint and route display.
+ * 
+ * @author Xperimental
+ */
 public class RoutePainter implements Painter<JXMapViewer> {
 
-    private static final Log logger = LogFactory.getLog(RoutePainter.class);
+    /**
+     * Color of the line connecting the waypoints.
+     */
+    private static final Color LINE_COLOR = new Color(0, 0, 0, 255);
 
+    /**
+     * Color of the route position marker.
+     */
+    private static final Color ROUTE_COLOR = new Color(255, 0, 0, 200);
+
+    /**
+     * Color of normal waypoint markers.
+     */
+    private static final Color WAYPOINT_COLOR = new Color(0, 0, 255, 200);
+
+    /**
+     * Logger for this class.
+     */
+    private static final Log LOGGER = LogFactory.getLog(RoutePainter.class);
+
+    /**
+     * Radius of waypoint points.
+     */
     private static final int POINT_RADIUS = 5;
 
+    /**
+     * Radius of route point.
+     */
     private static final int ROUTE_RADIUS = 8;
 
+    /**
+     * Contains the data model that is rendered.
+     */
     private IDataModel model;
+
+    /**
+     * Contains the image used for the start point.
+     */
     private Image startFlag;
+
+    /**
+     * Contains the image used for the end point.
+     */
     private Image endFlag;
 
-    public RoutePainter(IDataModel dataModel) {
+    /**
+     * Create a new default renderer for the data model.
+     * 
+     * @param dataModel
+     *            Data model to render.
+     */
+    public RoutePainter(final IDataModel dataModel) {
         model = dataModel;
 
         // Load images
@@ -42,16 +88,19 @@ public class RoutePainter implements Painter<JXMapViewer> {
     }
 
     /**
-     * @param startFlag2
-     * @param string
+     * Load the image from the resources.
+     * 
+     * @param key
+     *            Key of image to load.
+     * @return Image object of loaded image.
      */
-    private Image loadImage(String key) {
+    private Image loadImage(final String key) {
         InputStream input = getClass().getResourceAsStream(key);
         BufferedImage image = null;
         try {
             image = ImageIO.read(input);
         } catch (IOException e) {
-            logger.error("Can't load flag image: " + e);
+            LOGGER.error("Can't load flag image: " + e);
         }
         return image;
     }
@@ -62,7 +111,8 @@ public class RoutePainter implements Painter<JXMapViewer> {
      * java.lang.Object, int, int)
      */
     @Override
-    public void paint(Graphics2D g, JXMapViewer map, int arg2, int arg3) {
+    public final void paint(final Graphics2D g, final JXMapViewer map,
+            final int arg2, final int arg3) {
         List<Point2D> linePoints = new ArrayList<Point2D>();
 
         for (GpsWaypoint wp : model.getWaypoints()) {
@@ -81,7 +131,7 @@ public class RoutePainter implements Painter<JXMapViewer> {
         }
 
         if (linePoints.size() > 1) {
-            g.setPaint(new Color(0, 0, 0, 255));
+            g.setPaint(LINE_COLOR);
             Point2D start = linePoints.remove(0);
             while (linePoints.size() > 0) {
                 Point2D end = linePoints.remove(0);
@@ -101,47 +151,69 @@ public class RoutePainter implements Painter<JXMapViewer> {
     }
 
     /**
+     * Paint the current route position.
+     * 
      * @param g
+     *            Context to paint to.
      * @param routeMap
+     *            Point to paint marker at.
      */
-    private void paintRoutePosition(Graphics2D g, Point2D routeMap) {
-        g.setPaint(new Color(255, 0, 0, 200));
+    private void paintRoutePosition(final Graphics2D g, final Point2D routeMap) {
+        g.setPaint(ROUTE_COLOR);
         g.fillOval((int) (routeMap.getX() - ROUTE_RADIUS), (int) (routeMap
                 .getY() - ROUTE_RADIUS), ROUTE_RADIUS * 2, ROUTE_RADIUS * 2);
     }
 
     /**
+     * Paint the start point.
+     * 
      * @param g
-     * @param mapPoint
+     *            Context to paint to.
+     * @param point
+     *            Point to paint marker at.
      */
-    private void paintStartPoint(Graphics2D g, Point2D point) {
+    private void paintStartPoint(final Graphics2D g, final Point2D point) {
         drawFlag(g, point, startFlag);
     }
 
     /**
+     * Paint the image at the given position.
+     * 
      * @param g
+     *            Context to paint to.
      * @param point
+     *            Point to paint image at.
      * @param flag
+     *            Image to paint.
      */
-    private void drawFlag(Graphics2D g, Point2D point, Image flag) {
+    private void drawFlag(final Graphics2D g, final Point2D point,
+            final Image flag) {
         g.drawImage(flag, (int) point.getX() - (flag.getWidth(null) / 2),
                 (int) point.getY() - flag.getHeight(null), null);
     }
 
     /**
+     * Paint the end point.
+     * 
      * @param g
-     * @param mapPoint
+     *            Context to paint to.
+     * @param point
+     *            Point to paint marker at.
      */
-    private void paintEndPoint(Graphics2D g, Point2D point) {
+    private void paintEndPoint(final Graphics2D g, final Point2D point) {
         drawFlag(g, point, endFlag);
     }
 
     /**
+     * Paint a normal waypoint marker.
+     * 
      * @param g
-     * @param mapPoint
+     *            Context to paint to.
+     * @param point
+     *            Point to paint marker at.
      */
-    private void paintNormalPoint(Graphics2D g, Point2D point) {
-        g.setPaint(new Color(0, 0, 255, 200));
+    private void paintNormalPoint(final Graphics2D g, final Point2D point) {
+        g.setPaint(WAYPOINT_COLOR);
         g.fillOval((int) (point.getX() - POINT_RADIUS),
                 (int) (point.getY() - POINT_RADIUS), POINT_RADIUS * 2,
                 POINT_RADIUS * 2);
