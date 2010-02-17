@@ -3,68 +3,41 @@ package net.sourcewalker.fakegps.gui;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-import javax.swing.ActionMap;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.border.TitledBorder;
 
 import net.sourcewalker.fakegps.data.IDataModel;
 import net.sourcewalker.fakegps.data.MapTool;
 import net.sourcewalker.fakegps.data.MapToolListener;
 
-import org.jdesktop.application.Application;
-import org.jdesktop.application.ApplicationContext;
-import org.jdesktop.application.ResourceMap;
-
-public class WaypointPanel extends JPanel {
+public class WaypointPanel extends PanelBase {
 
     private static final long serialVersionUID = -1272970302372723527L;
-
-    private IDataModel model;
 
     private JToggleButton addButton;
 
     private JToggleButton removeButton;
 
-    private ActionMap actions;
-
-    private TitledBorder border;
-
-    private ResourceMap resMap;
-
     private JButton clearButton;
 
     public WaypointPanel(IDataModel dataModel) {
-        super();
-        model = dataModel;
+        super(WaypointPanel.class, "waypointPanel", new WaypointActions(
+                dataModel), dataModel);
+    }
 
-        initResources();
-
-        setName("waypointPanel");
-        setBorder(getPanelBorder());
+    /*
+     * (non-Javadoc)
+     * @see net.sourcewalker.fakegps.gui.PanelBase#initComponents()
+     */
+    @Override
+    protected void initComponents() {
         setLayout(new FlowLayout());
         add(getAddButton());
         add(getRemoveButton());
         add(getClearButton());
         setMinimumSize(new Dimension(50, 100));
 
-        resMap.injectComponents(this);
         model.addToolListener(new ToolListener());
-    }
-
-    private TitledBorder getPanelBorder() {
-        if (border == null) {
-            border = new TitledBorder("");
-        }
-        return border;
-    }
-
-    private void initResources() {
-        ApplicationContext ctx = Application.getInstance().getContext();
-        resMap = ctx.getResourceMap(WaypointPanel.class);
-        actions = ctx.getActionMap(WaypointActions.class, new WaypointActions(
-                model));
     }
 
     private JToggleButton getAddButton() {
