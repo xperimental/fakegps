@@ -47,6 +47,11 @@
             <url>http://download.java.net/maven/2/</url>
         </repository>
     </repositories>
+    <scm>
+    	<connection>scm:git:http://github.com/xperimental/fakegps.git</connection>
+    	<developerConnection>scm:git:ssh://git@github.com/xperimental/fakegps.git</developerConnection>
+    	<url>http://github.com/xperimental/fakegps</url>
+    </scm>
     <build>
         <plugins>
             <plugin>
