@@ -64,4 +64,12 @@ public final class NullRoute implements IRoute {
     public void setSpeed(final double newSpeed) {
     }
 
+    /* (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IRoute#getState()
+     */
+    @Override
+    public RouteState getState() {
+        return RouteState.STOPPED;
+    }
+
 }

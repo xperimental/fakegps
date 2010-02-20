@@ -161,4 +161,24 @@ public interface IDataModel {
      */
     void notifyRouteEnded();
 
+    /**
+     * Set speed of simulated route.
+     * 
+     * @param speed
+     *            New speed of route (deg/s).
+     */
+    void setRouteSpeed(double speed);
+
+    /**
+     * Returns the current route speed.
+     * 
+     * @return Current route speed.
+     */
+    double getRouteSpeed();
+
+    /**
+     * Notify all listeners, that the route controller has change its state.
+     */
+    void notifyRouteStateChange();
+
 }

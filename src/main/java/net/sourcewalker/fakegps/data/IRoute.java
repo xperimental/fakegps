@@ -51,4 +51,11 @@ public interface IRoute {
      */
     double getSpeed();
 
+    /**
+     * Returns the current state of the route controller.
+     * 
+     * @return State of the route controller.
+     */
+    RouteState getState();
+
 }

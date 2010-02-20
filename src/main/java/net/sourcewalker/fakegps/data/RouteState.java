@@ -5,7 +5,7 @@ package net.sourcewalker.fakegps.data;
  * 
  * @author Xperimental
  */
-enum RouteState {
+public enum RouteState {
     /**
      * Route controller is running. Continuous position updates are expected.
      */

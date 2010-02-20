@@ -20,6 +20,11 @@ public class WaypointModel implements IDataModel {
     private static final Log LOGGER = LogFactory.getLog(WaypointModel.class);
 
     /**
+     * Default movement speed for this controller (deg/s).
+     */
+    private static final double DEFAULT_SPEED = 0.00001;
+
+    /**
      * List containing the current waypoints.
      */
     private List<GpsWaypoint> waypoints;
@@ -50,6 +55,11 @@ public class WaypointModel implements IDataModel {
      * route.
      */
     private GeoPosition currentRoutePosition = null;
+
+    /**
+     * Current route speed (deg/s).
+     */
+    private double routeSpeed = DEFAULT_SPEED;
 
     /**
      * Create a new empty data model.
@@ -289,6 +299,37 @@ public class WaypointModel implements IDataModel {
     public final void notifyRouteStarted(final IRoute route) {
         currentRoute = route;
         fireDataChanged();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IDataModel#setRouteSpeed(double)
+     */
+    @Override
+    public final void setRouteSpeed(final double speed) {
+        routeSpeed = speed;
+        if (currentRoute != IRoute.NULLROUTE) {
+            currentRoute.setSpeed(speed);
+        }
+        fireDataChanged();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IDataModel#notifyRouteStateChange()
+     */
+    @Override
+    public final void notifyRouteStateChange() {
+        fireDataChanged();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IDataModel#getRouteSpeed()
+     */
+    @Override
+    public final double getRouteSpeed() {
+        return routeSpeed;
     }
 
 }

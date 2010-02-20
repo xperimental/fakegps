@@ -13,11 +13,6 @@ import org.jdesktop.swingx.mapviewer.GeoPosition;
 public class SimpleRoute implements IRoute {
 
     /**
-     * Default movement speed for this controller (deg/s).
-     */
-    private static final double DEFAULT_SPEED = 0.00001;
-
-    /**
      * Time between position updates.
      */
     private static final int TICK_WAIT = 3000;
@@ -59,7 +54,7 @@ public class SimpleRoute implements IRoute {
             final List<GpsWaypoint> waypoints) {
         model = dataModel;
         waypointList = new ArrayList<GpsWaypoint>(waypoints);
-        speed = DEFAULT_SPEED;
+        speed = dataModel.getRouteSpeed();
         state = RouteState.RUNNING;
         worker = new RouteThread();
         worker.start();
@@ -81,6 +76,7 @@ public class SimpleRoute implements IRoute {
     @Override
     public final void pause() {
         state = RouteState.PAUSED;
+        model.notifyRouteStateChange();
     }
 
     /*
@@ -99,6 +95,7 @@ public class SimpleRoute implements IRoute {
     @Override
     public final void unpause() {
         state = RouteState.RUNNING;
+        model.notifyRouteStateChange();
     }
 
     /*
@@ -152,9 +149,9 @@ public class SimpleRoute implements IRoute {
                     GpsWaypoint end = waypointList.get(legStart + 1);
                     currentPosition = new GeoPosition(start.getLatitude(),
                             start.getLongitude());
-                    GeoPosition speedVector = getSpeedVector(start, end);
                     while (state != RouteState.STOPPED && !legEndReached(end)) {
                         fireNewLocation(currentPosition);
+                        GeoPosition speedVector = getSpeedVector(start, end);
                         currentPosition = new GeoPosition(currentPosition
                                 .getLatitude()
                                 + speedVector.getLatitude(), currentPosition
@@ -247,6 +244,15 @@ public class SimpleRoute implements IRoute {
      */
     public final void fireRouteEnded() {
         model.notifyRouteEnded();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see net.sourcewalker.fakegps.data.IRoute#getState()
+     */
+    @Override
+    public RouteState getState() {
+        return state;
     }
 
 }
