@@ -178,8 +178,8 @@ public class WaypointModel implements IDataModel {
     /*
      * (non-Javadoc)
      * @see
-     * net.sourcewalker.fakegps.data.IDataModel#removeToolListener(net.sourcewalker
-     * .fakegps.data.MapToolListener)
+     * net.sourcewalker.fakegps.data.IDataModel#removeToolListener
+     * (net.sourcewalker.fakegps.data.MapToolListener)
      */
     @Override
     public final void removeToolListener(final MapToolListener listener) {
@@ -198,8 +198,8 @@ public class WaypointModel implements IDataModel {
     /*
      * (non-Javadoc)
      * @see
-     * net.sourcewalker.fakegps.data.IDataModel#addChangeListener(net.sourcewalker
-     * .fakegps.data.ModelChangeListener)
+     * net.sourcewalker.fakegps.data.IDataModel#addChangeListener
+     * (net.sourcewalker.fakegps.data.ModelChangeListener)
      */
     @Override
     public final void addChangeListener(final ModelChangeListener listener) {
@@ -292,8 +292,8 @@ public class WaypointModel implements IDataModel {
     /*
      * (non-Javadoc)
      * @see
-     * net.sourcewalker.fakegps.data.IDataModel#notifyRouteStarted(net.sourcewalker
-     * .fakegps.data.SimpleRoute)
+     * net.sourcewalker.fakegps.data.IDataModel#notifyRouteStarted
+     * (net.sourcewalker.fakegps.data.SimpleRoute)
      */
     @Override
     public final void notifyRouteStarted(final IRoute route) {

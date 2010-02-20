@@ -144,7 +144,9 @@ public class SimpleRoute implements IRoute {
         public void run() {
             if (waypointList.size() > 1) {
                 fireRouteStarted();
-                for (int legStart = 0; legStart < waypointList.size() - 1; legStart++) {
+                for (int legStart = 0;
+                     legStart < waypointList.size() - 1;
+                     legStart++) {
                     GpsWaypoint start = waypointList.get(legStart);
                     GpsWaypoint end = waypointList.get(legStart + 1);
                     currentPosition = new GeoPosition(start.getLatitude(),
@@ -251,7 +253,7 @@ public class SimpleRoute implements IRoute {
      * @see net.sourcewalker.fakegps.data.IRoute#getState()
      */
     @Override
-    public RouteState getState() {
+    public final RouteState getState() {
         return state;
     }
 

@@ -158,7 +158,8 @@ public class RoutePainter implements Painter<JXMapViewer> {
      * @param routeMap
      *            Point to paint marker at.
      */
-    private void paintRoutePosition(final Graphics2D g, final Point2D routeMap) {
+    private void paintRoutePosition(final Graphics2D g,
+            final Point2D routeMap) {
         g.setPaint(ROUTE_COLOR);
         g.fillOval((int) (routeMap.getX() - ROUTE_RADIUS), (int) (routeMap
                 .getY() - ROUTE_RADIUS), ROUTE_RADIUS * 2, ROUTE_RADIUS * 2);

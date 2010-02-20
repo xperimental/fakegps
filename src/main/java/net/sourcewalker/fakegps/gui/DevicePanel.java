@@ -11,17 +11,48 @@ import javax.swing.JToggleButton;
 
 import net.sourcewalker.fakegps.data.IDataModel;
 
+/**
+ * Contains the GUI elements used for interaction with the device emulator.
+ * 
+ * @author Xperimental
+ */
 public class DevicePanel extends PanelBase {
 
+    /**
+     * Defines the default port for connecting to the emulator.
+     */
+    private static final int DEFAULT_PORT = 5554;
+
+    /**
+     * ID for serialization.
+     */
     private static final long serialVersionUID = -143033466306885706L;
+
+    /**
+     * Contains the textbox used for port entry.
+     */
     private JTextField portBox;
+
+    /**
+     * Contains the button used for toggling the connection state.
+     */
     private JToggleButton connectButton;
+
+    /**
+     * Contains the label in front of the port entry box.
+     */
     private JLabel portLabel;
 
+    /**
+     * Create a new instance of this panel.
+     * 
+     * @param dataModel
+     *            Data model to use.
+     */
     public DevicePanel(final IDataModel dataModel) {
         super(DevicePanel.class, "devicePanel", new DeviceActions(dataModel),
                 dataModel);
-        ((DeviceActions) actionsContainer).setPanel(this);
+        ((DeviceActions) getActionsContainer()).setPanel(this);
     }
 
     /*
@@ -58,7 +89,7 @@ public class DevicePanel extends PanelBase {
         c.weightx = 1;
         c.gridwidth = 2;
         connectButton = new JToggleButton();
-        connectButton.setAction(actions.get("toggleConnect"));
+        connectButton.setAction(getActions().get("toggleConnect"));
         gridPanel.add(connectButton, c);
     }
 
@@ -72,7 +103,7 @@ public class DevicePanel extends PanelBase {
         try {
             port = Integer.parseInt(portBox.getText());
         } catch (NumberFormatException e) {
-            port = 5554;
+            port = DEFAULT_PORT;
         }
         return port.intValue();
     }

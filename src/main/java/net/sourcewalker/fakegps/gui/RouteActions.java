@@ -24,15 +24,21 @@ public class RouteActions extends ActionsBase {
         super(dataModel);
     }
 
+    /**
+     * Starts the route simulation if there is none running.
+     */
     @Action
-    public void playRoute() {
+    public final void playRoute() {
         if (getModel().getRoute() == IRoute.NULLROUTE) {
             getModel().startRoute();
         }
     }
 
+    /**
+     * Pauses or unpauses the route simulation if there is one running.
+     */
     @Action
-    public void pauseRoute() {
+    public final void pauseRoute() {
         IRoute route = getModel().getRoute();
         if (route != IRoute.NULLROUTE) {
             if (route.isPaused()) {
@@ -43,8 +49,11 @@ public class RouteActions extends ActionsBase {
         }
     }
 
+    /**
+     * Stops the route simulation if there is one running.
+     */
     @Action
-    public void resetRoute() {
+    public final void resetRoute() {
         IRoute route = getModel().getRoute();
         if (route != IRoute.NULLROUTE) {
             route.stop();
