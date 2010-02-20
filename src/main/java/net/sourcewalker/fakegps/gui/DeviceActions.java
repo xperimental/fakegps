@@ -1,8 +1,14 @@
 package net.sourcewalker.fakegps.gui;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+import javax.swing.JToggleButton;
 
 import net.sourcewalker.fakegps.data.IDataModel;
 import net.sourcewalker.fakegps.data.ModelChangeListener;
@@ -29,7 +35,8 @@ public class DeviceActions extends ActionsBase {
     }
 
     @Action
-    public final void connect() {
+    public final void connect(ActionEvent evt) {
+        JToggleButton toggle = (JToggleButton) evt.getSource();
         if (!isConnected()) {
             int port = devicePanel.getPort();
             try {
@@ -39,12 +46,7 @@ public class DeviceActions extends ActionsBase {
                 LOGGER.error("Error connecting: " + e);
                 deviceSocket = null;
             }
-        }
-    }
-
-    @Action
-    public final void disconnect() {
-        if (isConnected()) {
+        } else {
             try {
                 deviceStream.close();
                 deviceSocket.close();
@@ -53,6 +55,7 @@ public class DeviceActions extends ActionsBase {
             }
             deviceSocket = null;
         }
+        toggle.setSelected(isConnected());
     }
 
     public final void setPanel(final DevicePanel panel) {
@@ -65,11 +68,13 @@ public class DeviceActions extends ActionsBase {
 
     public final void sendNewPosition(final double latitude,
             final double longitude) {
+        DecimalFormat fmt = new DecimalFormat("0.00000", DecimalFormatSymbols
+                .getInstance(Locale.US));
         StringBuilder msg = new StringBuilder();
         msg.append("geo fix ");
-        msg.append(longitude);
+        msg.append(fmt.format(longitude));
         msg.append(" ");
-        msg.append(latitude);
+        msg.append(fmt.format(latitude));
         System.out.println("Sending: " + msg.toString());
 
         deviceStream.println(msg.toString());

@@ -13,14 +13,14 @@ import org.jdesktop.swingx.mapviewer.GeoPosition;
 public class SimpleRoute implements IRoute {
 
     /**
-     * Default movement speed for this controller.
+     * Default movement speed for this controller (deg/s).
      */
-    private static final double DEFAULT_SPEED = 0.001;
+    private static final double DEFAULT_SPEED = 0.00001;
 
     /**
      * Time between position updates.
      */
-    private static final int TICK_WAIT = 1000;
+    private static final int TICK_WAIT = 3000;
 
     /**
      * Data model used for events.

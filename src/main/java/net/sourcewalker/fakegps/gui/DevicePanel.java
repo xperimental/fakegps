@@ -4,10 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 import net.sourcewalker.fakegps.data.IDataModel;
 
@@ -15,8 +15,7 @@ public class DevicePanel extends PanelBase {
 
     private static final long serialVersionUID = -143033466306885706L;
     private JTextField portBox;
-    private JButton connectButton;
-    private JButton disconnectButton;
+    private JToggleButton connectButton;
     private JLabel portLabel;
 
     public DevicePanel(final IDataModel dataModel) {
@@ -50,7 +49,7 @@ public class DevicePanel extends PanelBase {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.anchor = GridBagConstraints.CENTER;
-        c.gridwidth = 3;
+        c.gridwidth = 1;
         portBox = new JTextField();
         gridPanel.add(portBox, c);
 
@@ -58,16 +57,9 @@ public class DevicePanel extends PanelBase {
         c.gridy = 1;
         c.weightx = 1;
         c.gridwidth = 2;
-        connectButton = new JButton();
+        connectButton = new JToggleButton();
         connectButton.setAction(actions.get("connect"));
         gridPanel.add(connectButton, c);
-
-        c.gridx = 2;
-        c.gridwidth = 2;
-        c.weightx = 1;
-        disconnectButton = new JButton();
-        disconnectButton.setAction(actions.get("disconnect"));
-        gridPanel.add(disconnectButton, c);
     }
 
     /**
