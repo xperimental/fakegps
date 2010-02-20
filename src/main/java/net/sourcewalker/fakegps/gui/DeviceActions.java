@@ -35,7 +35,7 @@ public class DeviceActions extends ActionsBase {
     }
 
     @Action
-    public final void connect(ActionEvent evt) {
+    public final void toggleConnect(ActionEvent evt) {
         JToggleButton toggle = (JToggleButton) evt.getSource();
         if (!isConnected()) {
             int port = devicePanel.getPort();
@@ -77,7 +77,7 @@ public class DeviceActions extends ActionsBase {
         msg.append(fmt.format(latitude));
         System.out.println("Sending: " + msg.toString());
 
-        deviceStream.println(msg.toString());
+        deviceStream.print(msg.toString() + "\r\n");
     }
 
     private class PositionListener implements ModelChangeListener {

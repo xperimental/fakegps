@@ -58,7 +58,7 @@ public class DevicePanel extends PanelBase {
         c.weightx = 1;
         c.gridwidth = 2;
         connectButton = new JToggleButton();
-        connectButton.setAction(actions.get("connect"));
+        connectButton.setAction(actions.get("toggleConnect"));
         gridPanel.add(connectButton, c);
     }
 
