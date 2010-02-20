@@ -3,7 +3,7 @@
     <groupId>net.sourcewalker</groupId>
     <artifactId>fakegps</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <name>fakegps</name>
     <url>http://github.com/xperimental/fakegps</url>
     <dependencies>
